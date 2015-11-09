@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ru.kazarin.javabrains.dto.User;
 import ru.kazarin.javabrains.service.LoginService;
 
 /**
@@ -29,6 +30,8 @@ public class LoginServlet extends HttpServlet {
 		boolean result = loginService.authenticate(userId, password);
 		
 		if (result) {
+			User user = loginService.getUserDetails(userId);
+			request.getSession().setAttribute("user", user);
 			response.sendRedirect("success.jsp");
 			return;
 		} else {
